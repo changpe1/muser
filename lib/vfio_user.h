@@ -4,6 +4,10 @@
  *   Copyright (c) Intel Corporation.
  *   All rights reserved.
  *
+ * Authors: Changpeng Liu <changpeng.liu@nutanix.com>
+ *          Thanos Makatos <thanos@nutanix.com>
+ *
+ *
  *   Redistribution and use in source and binary forms, with or without
  *   modification, are permitted provided that the following conditions
  *   are met:
@@ -35,56 +39,59 @@
 #define _VFIO_USER_H
 
 enum vfio_user_command {
-	VFIO_USER_VERSION			= 1,
-	VFIO_USER_DMA_MAP			= 2,
-	VFIO_USER_DMA_UNMAP			= 3,
-	VFIO_USER_DEVICE_GET_INFO		= 4,
-	VFIO_USER_DEVICE_GET_REGION_INFO	= 5,
-	VFIO_USER_DEVICE_GET_IRQ_INFO		= 6,
-	VFIO_USER_DEVICE_SET_IRQS		= 7,
-	VFIO_USER_REGION_READ			= 8,
-	VFIO_USER_REGION_WRITE			= 9,
-	VFIO_USER_DMA_READ			= 10,
-	VFIO_USER_DMA_WRITE			= 11,
-	VFIO_USER_DEVICE_RESET			= 13,
-	VFIO_USER_MAX,
+    VFIO_USER_VERSION                   = 1,
+    VFIO_USER_DMA_MAP                   = 2,
+    VFIO_USER_DMA_UNMAP                 = 3,
+    VFIO_USER_DEVICE_GET_INFO           = 4,
+    VFIO_USER_DEVICE_GET_REGION_INFO    = 5,
+    VFIO_USER_DEVICE_GET_IRQ_INFO       = 6,
+    VFIO_USER_DEVICE_SET_IRQS           = 7,
+    VFIO_USER_REGION_READ               = 8,
+    VFIO_USER_REGION_WRITE              = 9,
+    VFIO_USER_DMA_READ                  = 10,
+    VFIO_USER_DMA_WRITE                 = 11,
+    VFIO_USER_VM_INTERRUPT              = 12,
+    VFIO_USER_DEVICE_RESET              = 13,
+    VFIO_USER_MAX,
 };
 
 enum vfio_user_message_type {
-	VFIO_USER_MESSAGE_COMMAND		= 0,
-	VFIO_USER_MESSAGE_REPLY			= 1,
+    VFIO_USER_MESSAGE_COMMAND       = 0,
+    VFIO_USER_MESSAGE_REPLY         = 1,
 };
 
-#define VFIO_USER_FLAGS_NO_REPLY		(0x1)
+#define VFIO_USER_FLAGS_NO_REPLY        (0x1)
 
 struct vfio_user_header {
-	uint16_t	msg_id;
-	uint16_t	command;
-	uint32_t	msg_size;
-	struct {
-		uint32_t	type     : 4;
-		uint32_t	no_reply : 1;
-		uint32_t	error    : 1;
-		uint32_t	resvd    : 26;
-	} flags;
-	uint32_t	error_no;
-} __attribute((packed));
+    uint16_t    msg_id;
+    uint16_t    command;
+    uint32_t    msg_size;
+    struct {
+        uint32_t    type     : 4;
+        uint32_t    no_reply : 1;
+        uint32_t    error    : 1;
+        uint32_t    resvd    : 26;
+    } flags;
+    uint32_t    error_no;
+} __attribute__ ((packed));
 
-#define VFIO_USER_DMA_REGION_MAPPABLE		(0x1)
+#define VFIO_USER_DMA_REGION_MAPPABLE       (0x1)
 
 struct vfio_user_dma_region {
-	uint64_t	addr;
-	uint64_t	size;
-	uint64_t	offset;
-	uint32_t	protections;
-	uint32_t	flags;
-} __attribute((packed));
+    uint64_t    addr;
+    uint64_t    size;
+    uint64_t    offset;
+    uint32_t    protections;
+    uint32_t    flags;
+} __attribute__ ((packed));
 
 struct vfio_user_region_access {
-	uint64_t	offset;
-	uint32_t	region;
-	uint32_t	count;
-	uint8_t		data[];
-} __attribute((packed));
+    uint64_t    offset;
+    uint32_t    region;
+    uint32_t    count;
+    uint8_t     data[];
+} __attribute__ ((packed));
 
 #endif
+
+/* ex: set tabstop=4 shiftwidth=4 softtabstop=4 expandtab: */
